@@ -51,7 +51,7 @@ class Command(BaseCommand):
 
         # Text messages → analysis
         app.add_handler(TgMessageHandler(
-            filters.TEXT & ~filters.COMMAND,
+            (filters.TEXT | filters.CAPTION) & ~filters.COMMAND,
             self._handle_message,
         ))
 
@@ -115,7 +115,7 @@ class Command(BaseCommand):
     # ── Message handler (analysis) ────────────────────────────────
 
     async def _handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
-        text = update.message.text.strip()
+        text = (update.message.text or update.message.caption or '').strip()
         chat_id = update.effective_chat.id
         username = update.effective_user.username or ''
         message_id = update.message.message_id
