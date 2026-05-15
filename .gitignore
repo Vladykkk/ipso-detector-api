@@ -27,3 +27,5 @@ Thumbs.db
 
 # Sentence-transformers cache
 .cache/
+
+docs/
